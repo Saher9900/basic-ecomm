@@ -5,12 +5,41 @@ import { ProsContext } from "../../contexts/ProsContext";
 import { useNavigate } from "react-router-dom";
 
 function HomePagePros() {
-  const { getPros, pros } = useContext(ProsContext);
+  const { getPros, pros, prosLoading } = useContext(ProsContext);
   const navigate = useNavigate()
 
   useEffect(() => {
     getPros();
   }, []);
+
+  if (prosLoading) {
+    return (
+      <section className="featured">
+        <div className="featured-container">
+          <header className="featured-header">
+            <div className="h-4 w-32 rounded bg-gray-200 animate-pulse mb-2" />
+            <div className="h-8 w-56 rounded bg-gray-200 animate-pulse mb-2" />
+            <div className="h-4 w-72 rounded bg-gray-200 animate-pulse" />
+          </header>
+          <div className="featured-grid">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className="featured-card opacity-90">
+                <div className="featured-card-image-wrap bg-gray-200 animate-pulse min-h-[200px]" />
+                <div className="featured-card-body space-y-2 pt-3">
+                  <div className="h-5 w-3/4 rounded bg-gray-200 animate-pulse" />
+                  <div className="h-4 w-16 rounded bg-gray-200 animate-pulse" />
+                  <div className="h-4 w-20 rounded bg-gray-200 animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="featured-footer">
+            <div className="h-11 w-40 rounded-lg bg-gray-200 animate-pulse" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="featured">

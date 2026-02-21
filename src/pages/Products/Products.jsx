@@ -7,8 +7,9 @@ import { ProsContext } from "../../contexts/ProsContext.jsx";
 function Products() {
   const { category: categoryParam } = useParams();
   const navigate = useNavigate();
-  const { getCats, cats } = useContext(CatsContext);
-  const { getPros, pros } = useContext(ProsContext);
+  const { getCats, cats, catsLoading } = useContext(CatsContext);
+  const { getPros, pros, prosLoading } = useContext(ProsContext);
+  const loading = catsLoading || prosLoading;
 
   // Redirect /products to first category so URL always reflects selection
   useEffect(() => {
@@ -33,6 +34,35 @@ function Products() {
     getCats();
     getPros();
   }, []);
+
+  if (loading) {
+    return (
+      <div>
+        {/* Skeleton: category tabs */}
+        <div className="flex flex-row gap-4 py-4 justify-center">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="h-11 w-24 rounded-lg bg-gray-200 animate-pulse"
+            />
+          ))}
+        </div>
+        {/* Skeleton: product grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+            <div
+              key={i}
+              className="bg-white rounded-xl shadow border border-gray-100 flex flex-col items-center p-4"
+            >
+              <div className="w-full h-48 rounded-lg bg-gray-200 animate-pulse mb-4" />
+              <div className="w-3/4 h-5 rounded bg-gray-200 animate-pulse mb-2" />
+              <div className="mt-auto h-10 w-28 rounded-lg bg-gray-200 animate-pulse" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -66,7 +96,13 @@ function Products() {
             </div>
             <h2 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors duration-300">{pro.name}</h2>
             {/* Add more product info here if available, e.g. price, description, etc. */}
-            <button className="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 font-semibold">View Details</button>
+            <button
+              type="button"
+              onClick={() => navigate(`/products/proDetails/${pro.id}`)}
+              className="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 font-semibold"
+            >
+              View Details
+            </button>
           </div>
         ))}
       </div>

@@ -7,15 +7,21 @@ export const ProsContext = createContext()
 export const ProsContextProvider = ({children}) => {
 
   const [pros, setPros] = useState([])
+  const [prosLoading, setProsLoading] = useState(false)
   const prosURL = "/api/products";
   const getPros = async () => {
-    const {data} = await axios.get(prosURL)
-    setPros(Array.isArray(data) ? data.map((pro) => ({ ...pro, image: proxyImageUrl(pro?.image) })) : data)
-    console.log(data)
+    setProsLoading(true)
+    try {
+      const {data} = await axios.get(prosURL)
+      setPros(Array.isArray(data) ? data.map((pro) => ({ ...pro, image: proxyImageUrl(pro?.image) })) : data)
+      console.log(data)
+    } finally {
+      setProsLoading(false)
+    }
   }
 
   return (
-    <ProsContext.Provider value={{getPros, pros}}>
+    <ProsContext.Provider value={{getPros, pros, prosLoading}}>
       {children}
     </ProsContext.Provider>
   )

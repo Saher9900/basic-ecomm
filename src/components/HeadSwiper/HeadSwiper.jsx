@@ -3,15 +3,34 @@ import { useContext, useEffect } from "react";
 import { CatsContext } from "../../contexts/CatsContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/pagination";
 
 function HeadSwiper() {
-  const { getCats, cats } = useContext(CatsContext);
+  const { getCats, cats, catsLoading } = useContext(CatsContext);
+  const navigate = useNavigate()
   useEffect(() => {
     getCats();
   }, []);
+
+  if (catsLoading) {
+    return (
+      <section className="hero">
+        <div className="hero-swiper-wrap">
+          <div className="w-full min-h-[60vh] flex items-center justify-center bg-gray-200 animate-pulse">
+            <div className="text-center p-8">
+              <div className="h-6 w-48 rounded bg-gray-300 animate-pulse mx-auto mb-4" />
+              <div className="h-10 w-64 rounded bg-gray-300 animate-pulse mx-auto mb-4" />
+              <div className="h-4 w-80 rounded bg-gray-300 animate-pulse mx-auto mb-6" />
+              <div className="h-12 w-32 rounded-lg bg-gray-300 animate-pulse mx-auto" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="hero">
       <div className="hero-swiper-wrap">
@@ -40,9 +59,9 @@ function HeadSwiper() {
                   <p className="hero-label">{cat.name}</p>
                   <h1 className="hero-title">{cat.name}</h1>
                   <p className="hero-desc">{cat.description}</p>
-                  <Link to="/products" className="hero-cta">
+                  <div onClick={() => navigate(`/products/${cat.name}`)} className="hero-cta">
                     Shop {cat.name}
-                  </Link>
+                  </div>
                 </div>
               </div>
             </SwiperSlide>
