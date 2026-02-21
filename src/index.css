@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:root{
+  --section-color: #f5f5f5;
+}
+
+body{
+  font-family: "SN Pro", sans-serif;
+}
