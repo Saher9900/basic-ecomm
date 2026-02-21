@@ -10,7 +10,7 @@
         "component": "src/template/TemplateName.jsx",
         "style": "src/template/TemplateName.css"
       },
-      "path": "src/components",
+      "path": "src/pages",
       "withStyle": true,
       "withTest": false,
       "withStory": false,

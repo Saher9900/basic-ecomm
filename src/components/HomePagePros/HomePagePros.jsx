@@ -1,36 +1,55 @@
-import './HomePagePros.css'
-import { useContext, useEffect } from 'react';
-import { ProsContext } from '../../contexts/ProsContext';
+import "./HomePagePros.css";
+import { useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ProsContext } from "../../contexts/ProsContext";
+import { useNavigate } from "react-router-dom";
 
 function HomePagePros() {
+  const { getPros, pros } = useContext(ProsContext);
+  const navigate = useNavigate()
 
-  const {getPros, pros} = useContext(ProsContext);
-  
   useEffect(() => {
     getPros();
-  }, [])
+  }, []);
 
   return (
-    <section className="py-12 bg-white">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-gray-900">Featured Products</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <section className="featured">
+      <div className="featured-container">
+        <header className="featured-header">
+          <span className="featured-eyebrow">Shop by category</span>
+          <h2 className="featured-title">Featured products</h2>
+          <p className="featured-subtitle">
+            Hand-picked tech and electronics for every need.
+          </p>
+        </header>
+        <div className="featured-grid">
           {pros.slice(0, 8).map((pro) => (
-            <div key={pro.id} className="bg-gray-100 rounded-xl shadow-lg p-4 flex flex-col items-center hover:shadow-2xl transition-shadow duration-300">
-              <div className="w-full h-48 flex items-center justify-center overflow-hidden rounded-lg bg-white mb-4">
+            <div
+              onClick={() => navigate(`/products/proDetails/${pro.id}`)}
+              key={pro.id}
+              className="featured-card"
+            >
+              <div className="featured-card-image-wrap">
                 <img
                   src={pro?.image}
                   alt={pro?.name}
-                  className="object-contain h-full w-auto max-w-full"
+                  className="featured-card-image"
                 />
               </div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2 text-center">{pro?.name}</h3>
-              {pro?.price && (
-                <div className="text-blue-600 font-bold text-md mb-2">${pro?.price}</div>
-              )}
-              <button className="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 font-semibold">View Details</button>
+              <div className="featured-card-body">
+                <h3 className="featured-card-title">{pro?.name}</h3>
+                {pro?.price != null && (
+                  <span className="featured-card-price">${pro.price}</span>
+                )}
+                <span className="featured-card-cta">View details</span>
+              </div>
             </div>
           ))}
+        </div>
+        <div className="featured-footer">
+          <Link to='/products/' className="featured-btn">
+            View all products
+          </Link>
         </div>
       </div>
     </section>

@@ -1,0 +1,227 @@
+.header-root {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #0f172a;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.top-bar {
+  background: linear-gradient(90deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  padding: 0.25rem 0;
+}
+
+.top-bar-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.top-bar-text {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+
+.top-bar-accent {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #f59e0b;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.main-nav {
+  position: relative;
+}
+
+.nav-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0.875rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #f8fafc;
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+  transition: color 0.2s ease;
+}
+
+.logo:hover {
+  color: #f59e0b;
+}
+
+.logo-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.logo-text {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo:hover .logo-text {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav-links {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #94a3b8;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link-active {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.nav-link-active:hover {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.18);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-cart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #94a3b8;
+  border-radius: 0.5rem;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-cart:hover {
+  color: #f59e0b;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-mobile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #e2e8f0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .nav-mobile-btn {
+    display: none;
+  }
+}
+
+.nav-mobile-btn:hover {
+  color: #f59e0b;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #0f172a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+
+.mobile-menu-open {
+  max-height: 16rem;
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+
+.mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mobile-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #94a3b8;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.mobile-link:hover,
+.mobile-link-active {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+}
