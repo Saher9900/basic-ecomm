@@ -58,6 +58,7 @@
 }
 
 .featured-card {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -124,6 +125,7 @@
 }
 
 .featured-card-cta {
+  cursor: pointer;
   font-size: 0.875rem;
   font-weight: 600;
   color: #64748b;

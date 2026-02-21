@@ -96,6 +96,7 @@
 }
 
 .hero-cta {
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   padding: 0.875rem 1.75rem;
@@ -117,6 +118,7 @@
 
 /* Swiper pagination override */
 .hero-swiper .swiper-pagination-bullet {
+  cursor: pointer;
   background: rgba(255, 255, 255, 0.5);
   opacity: 1;
   width: 0.5rem;

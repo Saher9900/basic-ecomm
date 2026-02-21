@@ -23,9 +23,9 @@ function Products() {
   // Use category from URL, or first category, or "phones" as fallback
   const chosenCat =
     categoryParam &&
-    cats.some((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
+      cats.some((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
       ? cats.find((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
-          ?.name
+        ?.name
       : cats.length
         ? cats[0].name
         : "phones";
@@ -99,10 +99,19 @@ function Products() {
             <button
               type="button"
               onClick={() => navigate(`/products/proDetails/${pro.id}`)}
-              className="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 font-semibold"
+              className="mt-auto px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition-colors duration-200 font-semibold cursor-pointer"
             >
               View Details
             </button>
+            <a
+              href={`https://wa.me/201282236170?text=Hello, I want to ask about ${pro.name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 px-4 py-2 bg-green-500 text-white rounded-lg"
+            >
+              Order on WhatsApp
+            </a>
+
           </div>
         ))}
       </div>
