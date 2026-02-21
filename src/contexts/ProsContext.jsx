@@ -6,7 +6,7 @@ export const ProsContext = createContext()
 export const ProsContextProvider = ({children}) => {
 
   const [pros, setPros] = useState([])
-  const prosURL = "http://ecommercedb.runasp.net/api/products"
+  const prosURL = "/api/products";
   const getPros = async () => {
     const {data} = await axios.get(prosURL)
     setPros(data)

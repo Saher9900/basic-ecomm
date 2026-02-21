@@ -5,7 +5,7 @@ import axios from "axios";
 export const CatsContext = createContext()
 
 export const CatContextProvider = ({children}) => {
-  const catsURL = "http://ecommercedb.runasp.net/api/categories";
+  const catsURL = "/api/categories";
   const [cats, setCats] = useState([]);
   const getCats = async () => {
     try{
