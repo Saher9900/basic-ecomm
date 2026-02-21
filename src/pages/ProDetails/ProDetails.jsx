@@ -3,14 +3,13 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { proxyImageUrl } from "../../utils/imageUrl.js";
-import { getApiBase } from "../../utils/api.js";
 
 function ProDetails() {
   const [pro, setPro] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { id } = useParams();
-  const apiURL = `${getApiBase()}/api/products`;
+  const apiURL = "/api/products";
 
   useEffect(() => {
     let cancelled = false;
