@@ -7,6 +7,7 @@ import Products from './pages/Products/Products.jsx'
 import NotFound from './pages/NotFound/NotFound.jsx'
 import ErrorPage from './pages/ErrorPage/ErrorPage.jsx'
 import ProDetails from './pages/ProDetails/ProDetails.jsx'
+import Contact from './pages/Contact/Contact.jsx'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           { index: true, element: <Home /> },
           { path: "about", element: <About /> },
           { path: "products", element: <Products /> },
+          { path: "contact", element: <Contact /> },
           { path: "products/proDetails/:id", element: <ProDetails /> },
           { path: "products/:category", element: <Products /> },
           { path: "*", element: <NotFound /> },

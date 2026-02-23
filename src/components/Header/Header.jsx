@@ -12,6 +12,7 @@ function Header() {
     { to: "/", label: "Home" },
     { to: "/about", label: "About" },
     { to: "/products", label: "Products" },
+    { to: "/contact", label: "Contact" },
   ];
 
   const isActive = (path) =>
@@ -23,7 +24,7 @@ function Header() {
       <div className="top-bar">
         <div className="top-bar-inner">
           <span className="top-bar-text">
-            Free shipping on orders over $50 · Same-day dispatch
+            We ship everywhere in Egypt. any inquiries? contact us at 01289746238
           </span>
           <span className="top-bar-accent">ElectroMart</span>
         </div>

@@ -7,9 +7,9 @@ function Home() {
   return (
     <>
       <HeadSwiper />
+      <Info />
       <CategoriesSwiper />
       <HomePagePros />
-      <Info />
     </>
   )
 }
