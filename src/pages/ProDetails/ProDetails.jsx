@@ -9,7 +9,15 @@ function ProDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { id } = useParams();
-  const apiURL = "/api/products";
+  
+  // Check sessionStorage to see where user came from
+  const fromHome = sessionStorage.getItem('fromHome') === 'true';
+  const apiURL = fromHome ? "/api/FeaturedProducts" : "/api/products";
+  
+  // Clear the sessionStorage after using it
+  useEffect(() => {
+    sessionStorage.removeItem('fromHome');
+  }, []);
 
   useEffect(() => {
     let cancelled = false;

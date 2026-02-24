@@ -263,7 +263,7 @@ function Products() {
                 <div className="mt-auto px-4 pb-4 pt-1 flex flex-col gap-2">
                   <button
                     type="button"
-                    onClick={() => navigate(`/products/proDetails/${pro.id}`)}
+                    onClick={() => navigate(`/products/proDetails/${pro.id}`, { state: { from: 'products' } })}
                     className="inline-flex items-center justify-center gap-2 w-full h-10 rounded-lg bg-amber-500 text-slate-900 text-sm font-semibold hover:bg-amber-400 transition-colors"
                   >
                     <HiOutlineShoppingBag className="w-4 h-4" />

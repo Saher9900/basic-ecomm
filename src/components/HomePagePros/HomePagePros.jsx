@@ -13,35 +13,6 @@ function HomePagePros() {
     getPros();
   }, []);
 
-  if (prosLoading) {
-    return (
-      <section className="featured">
-        <div className="featured-container">
-          <header className="featured-header">
-            <div className="h-4 w-32 rounded bg-gray-200 animate-pulse mb-2" />
-            <div className="h-8 w-56 rounded bg-gray-200 animate-pulse mb-2" />
-            <div className="h-4 w-72 rounded bg-gray-200 animate-pulse" />
-          </header>
-          <div className="featured-grid">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <div key={i} className="featured-card opacity-90">
-                <div className="featured-card-image-wrap bg-gray-200 animate-pulse min-h-[200px]" />
-                <div className="featured-card-body space-y-2 pt-3">
-                  <div className="h-5 w-3/4 rounded bg-gray-200 animate-pulse" />
-                  <div className="h-4 w-16 rounded bg-gray-200 animate-pulse" />
-                  <div className="h-4 w-20 rounded bg-gray-200 animate-pulse" />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="featured-footer">
-            <div className="h-11 w-40 rounded-lg bg-gray-200 animate-pulse" />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   const gridVariants = {
     hidden: { opacity: 0, y: 10 },
     show: {
@@ -87,7 +58,10 @@ function HomePagePros() {
         >
           {pros.slice(0, 8).map((pro) => (
             <motion.div
-              onClick={() => navigate(`/products/proDetails/${pro.id}`)}
+              onClick={() => {
+                sessionStorage.setItem('fromHome', 'true');
+                navigate(`/products/proDetails/${pro.id}`, { state: { from: 'home' } });
+              }}
               key={pro.id}
               className="featured-card"
               variants={cardVariants}
@@ -101,9 +75,6 @@ function HomePagePros() {
               </div>
               <div className="featured-card-body">
                 <h3 className="featured-card-title">{pro?.name}</h3>
-                {pro?.price != null && (
-                  <span className="featured-card-price">${pro.price}</span>
-                )}
                 <span className="featured-card-cta">View details</span>
               </div>
             </motion.div>
