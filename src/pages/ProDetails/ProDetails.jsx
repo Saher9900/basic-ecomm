@@ -98,9 +98,14 @@ function ProDetails() {
             <p className="prodetails__description">
               {pro.description || "No description available."}
             </p>
-            <button type="button" className="prodetails__cta">
+            <a
+              href={`https://wa.me/201282236170?text=Hello, I want to order ${pro.name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="prodetails__cta"
+            >
               want to order?
-            </button>
+            </a>
           </div>
         </article>
       </div>

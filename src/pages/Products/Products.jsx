@@ -24,13 +24,15 @@ function Products() {
 
   // Use category from URL, or first category, or "phones" as fallback
   const chosenCat =
-    categoryParam &&
-      cats.some((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
-      ? cats.find((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
-        ?.name
-      : cats.length
-        ? cats[0].name
-        : "phones";
+    categoryParam === "all"
+      ? "all"
+      : categoryParam &&
+        cats.some((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
+        ? cats.find((c) => c.name.toLowerCase() === categoryParam.toLowerCase())
+          ?.name
+        : cats.length
+          ? cats[0].name
+          : "phones";
 
   useEffect(() => {
     getCats();
@@ -128,9 +130,11 @@ function Products() {
     );
   }
 
-  const filteredPros = pros.filter((pro) => {
-    return pro.categoryName?.toLowerCase() === chosenCat?.toLowerCase();
-  });
+  const filteredPros = chosenCat === "all" 
+    ? pros 
+    : pros.filter((pro) => {
+        return pro.categoryName?.toLowerCase() === chosenCat?.toLowerCase();
+      });
 
   return (
     <section className="min-h-screen bg-slate-950">
@@ -156,10 +160,15 @@ function Products() {
                 <span className="font-semibold text-slate-100">
                   {filteredPros.length}
                 </span>{" "}
-                items in{" "}
-                <span className="font-semibold text-amber-400">
-                  {chosenCat}
-                </span>
+                items
+                {chosenCat !== "all" && (
+                  <>
+                    {" "}in{" "}
+                    <span className="font-semibold text-amber-400">
+                      {chosenCat}
+                    </span>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -173,7 +182,21 @@ function Products() {
             initial="hidden"
             animate="show"
           >
-            {cats.map((cat, index) => {
+            {/* All Products tab */}
+            <motion.div variants={categoryChipVariants}>
+              <Link
+                to="/products/all"
+                className={`whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium no-underline transition-all duration-150 ${
+                  chosenCat === "all"
+                    ? "bg-amber-500 text-slate-900 border-amber-400 shadow-lg shadow-amber-500/30"
+                    : "bg-slate-900/60 text-slate-200 border-slate-700 hover:bg-slate-800 hover:border-slate-500"
+                }`}
+              >
+                All Products
+              </Link>
+            </motion.div>
+            
+            {cats.map((cat) => {
               const isActive = chosenCat === cat.name;
               return (
                 <motion.div key={cat.id} variants={categoryChipVariants}>

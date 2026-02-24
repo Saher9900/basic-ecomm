@@ -82,7 +82,7 @@ function HomePagePros() {
           className="featured-grid"
           variants={gridVariants}
           initial="hidden"
-          animate="show"
+          whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
         >
           {pros.slice(0, 8).map((pro) => (

@@ -100,7 +100,7 @@ function CategoriesSwiper() {
         </div>
 
         <motion.div
-          className="grid gap-4 grid-cols-2 md:grid-cols-3 auto-rows-[200px] md:auto-rows-[220px]"
+          className="grid gap-4 grid-cols-2 md:grid-cols-3 auto-rows-[200px] md:auto-rows-[220px] grid-flow-row-dense"
           variants={gridVariants}
           initial="hidden"
           whileInView="show"
@@ -109,7 +109,7 @@ function CategoriesSwiper() {
           {first && (
             <MotionLink
               to={`/products/${encodeURIComponent(first.name)}`}
-              className="group relative rounded-2xl overflow-hidden flex items-stretch"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch md:row-span-2"
               variants={cardVariants}
             >
               <div className="absolute inset-0">
@@ -181,7 +181,7 @@ function CategoriesSwiper() {
           {third && (
             <MotionLink
               to={`/products/${encodeURIComponent(third.name)}`}
-              className="group relative rounded-2xl overflow-hidden flex items-stretch"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch md:row-span-2"
               variants={cardVariants}
             >
               <div className="absolute inset-0">
@@ -213,7 +213,7 @@ function CategoriesSwiper() {
           {fourth && (
             <MotionLink
               to={`/products/${encodeURIComponent(fourth.name)}`}
-              className="group relative rounded-2xl overflow-hidden flex items-stretch"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch md:row-span-2"
               variants={cardVariants}
             >
               <div className="absolute inset-0">
@@ -245,7 +245,7 @@ function CategoriesSwiper() {
           {fifth && (
             <MotionLink
               to={`/products/${encodeURIComponent(fifth.name)}`}
-              className="group relative rounded-2xl overflow-hidden flex items-stretch md:col-start-3"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch md:row-span-2 md:col-start-3"
               variants={cardVariants}
             >
               <div className="absolute inset-0">
