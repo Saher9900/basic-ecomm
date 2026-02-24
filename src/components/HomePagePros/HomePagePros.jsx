@@ -1,12 +1,13 @@
 import "./HomePagePros.css";
 import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ProsContext } from "../../contexts/ProsContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FeatContext } from "../../contexts/FeatContext";
+import { motion } from "motion/react";
 
 function HomePagePros() {
-  const { getPros, pros, prosLoading } = useContext(ProsContext);
-  const navigate = useNavigate()
+  // Use featured products from FeatContext
+  const { getPros, pros, prosLoading } = useContext(FeatContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPros();
@@ -41,6 +42,32 @@ function HomePagePros() {
     );
   }
 
+  const gridVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.45,
+        ease: [0.22, 0.61, 0.36, 1],
+        staggerChildren: 0.09,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 12 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 0.61, 0.36, 1],
+      },
+    },
+  };
+
   return (
     <section className="featured">
       <div className="featured-container">
@@ -51,13 +78,19 @@ function HomePagePros() {
             Hand-picked tech and electronics for every need.
           </p>
         </header>
-        <div className="featured-grid">
-          {pros.slice(0, 8).map((pro, index) => (
-            <div
+        <motion.div
+          className="featured-grid"
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.25 }}
+        >
+          {pros.slice(0, 8).map((pro) => (
+            <motion.div
               onClick={() => navigate(`/products/proDetails/${pro.id}`)}
               key={pro.id}
-              className="featured-card animate-fade-in-up"
-              style={{ animationDelay: `${index * 70}ms` }}
+              className="featured-card"
+              variants={cardVariants}
             >
               <div className="featured-card-image-wrap">
                 <img
@@ -73,11 +106,11 @@ function HomePagePros() {
                 )}
                 <span className="featured-card-cta">View details</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
         <div className="featured-footer">
-          <Link to='/products/' className="featured-btn">
+          <Link to="/products/" className="featured-btn">
             View all products
           </Link>
         </div>

@@ -1,10 +1,39 @@
 import "./About.css";
+import { motion } from "motion/react";
 
 function About() {
+  const sectionVariants = {
+    hidden: { opacity: 0, y: 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 0.61, 0.36, 1],
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const fadeUpChild = {
+    hidden: { opacity: 0, y: 16 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: [0.22, 0.61, 0.36, 1] },
+    },
+  };
+
   return (
     <div className="about-root min-h-screen">
-      <section className="about-hero">
-        <div className="about-hero-inner">
+      <motion.section
+        className="about-hero"
+        variants={sectionVariants}
+        initial="hidden"
+        animate="show"
+      >
+        <motion.div className="about-hero-inner" variants={fadeUpChild}>
           <p className="about-kicker">About ElectroMart</p>
           <h1 className="about-title">
             A modern way to shop tech in Egypt.
@@ -15,7 +44,7 @@ function About() {
             enjoyable.
           </p>
 
-          <div className="about-stats">
+          <motion.div className="about-stats" variants={fadeUpChild}>
             <div className="about-stat">
               <span className="about-stat-number">5k+</span>
               <span className="about-stat-label">Orders delivered</span>
@@ -28,13 +57,22 @@ function About() {
               <span className="about-stat-number">24h</span>
               <span className="about-stat-label">Average response time</span>
             </div>
-          </div>
-        </div>
-      </section>
+          </motion.div>
+        </motion.div>
+      </motion.section>
 
-      <section className="about-content">
+      <motion.section
+        className="about-content"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.25 }}
+      >
         <div className="about-layout">
-          <div className="about-column about-column-main">
+          <motion.div
+            className="about-column about-column-main"
+            variants={fadeUpChild}
+          >
             <div className="about-card">
               <h2>Who we are</h2>
               <p>
@@ -73,9 +111,12 @@ function About() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="about-column about-column-side">
+          <motion.div
+            className="about-column about-column-side"
+            variants={fadeUpChild}
+          >
             <div className="about-card about-values">
               <h2>What we believe in</h2>
               <ul className="about-list">
@@ -120,11 +161,17 @@ function About() {
                 device.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="about-cta">
+      <motion.section
+        className="about-cta"
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div className="about-cta-inner">
           <h2>Ready to upgrade your tech?</h2>
           <p>
@@ -140,7 +187,7 @@ function About() {
             </a>
           </div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 }
