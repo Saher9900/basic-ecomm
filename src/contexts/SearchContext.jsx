@@ -8,10 +8,12 @@ export const SearchContextProvider = ({ children }) => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState([]);
 
+  const searchURL = "/api/products/search";
+
   const getProsFromSearch = async (input) => {
-    const { data } = await axios.get(
-      `http://ecommercedb.runasp.net/api/Products/search?name=${input}`,
-    );
+    const { data } = await axios.get(searchURL, {
+      params: { name: input },
+    });
     setResult(data);
   };
 
