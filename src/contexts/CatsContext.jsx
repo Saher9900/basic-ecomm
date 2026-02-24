@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useCallback } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { proxyImageUrl } from "../utils/imageUrl.js";
@@ -9,7 +9,7 @@ export const CatContextProvider = ({children}) => {
   const catsURL = "/api/categories";
   const [cats, setCats] = useState([]);
   const [catsLoading, setCatsLoading] = useState(false);
-  const getCats = async () => {
+  const getCats = useCallback(async () => {
     setCatsLoading(true);
     try {
       const {data} = await axios.get(catsURL)
@@ -20,7 +20,7 @@ export const CatContextProvider = ({children}) => {
     } finally {
       setCatsLoading(false);
     }
-  }
+  }, []);
   return (
     <CatsContext.Provider value={{getCats, cats, catsLoading}}>
       {children}

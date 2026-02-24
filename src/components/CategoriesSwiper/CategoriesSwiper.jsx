@@ -1,8 +1,11 @@
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { HiArrowRight } from "react-icons/hi2";
 import { CatsContext } from "../../contexts/CatsContext";
 import "./CategoriesSwiper.css";
 import { motion } from "motion/react"
+
+const MotionLink = motion(Link);
 
 const FALLBACK_CATS = [
   {
@@ -18,7 +21,7 @@ function CategoriesSwiper() {
 
   useEffect(() => {
     getCats();
-  }, []);
+  }, [getCats]);
 
   const list =
     Array.isArray(cats) && cats.length > 0
@@ -52,7 +55,6 @@ function CategoriesSwiper() {
 
   const [first, second, third, fourth, fifth] = list;
 
-  const MotionLink = motion(Link);
 
   const gridVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -98,7 +100,7 @@ function CategoriesSwiper() {
         </div>
 
         <motion.div
-          className="grid gap-4 md:grid-cols-3 auto-rows-[180px] md:auto-rows-[190px]"
+          className="grid gap-4 grid-cols-2 md:grid-cols-3 auto-rows-[200px] md:auto-rows-[220px]"
           variants={gridVariants}
           initial="hidden"
           whileInView="show"
@@ -107,88 +109,103 @@ function CategoriesSwiper() {
           {first && (
             <MotionLink
               to={`/products/${encodeURIComponent(first.name)}`}
-              className="group relative md:row-span-2 md:col-span-2 rounded-2xl overflow-hidden bg-emerald-500 text-white flex items-stretch"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch"
               variants={cardVariants}
             >
-              <div className="flex-1 p-6 sm:p-8 flex flex-col justify-between">
-                <div>
-                  <p className="uppercase text-xs tracking-[0.2em] mb-2 opacity-80">
-                    Fresh &amp; organic
-                  </p>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold mb-2 line-clamp-2">
-                    {first.name}
-                  </h3>
-                  {first.description && (
-                    <p className="text-sm sm:text-base max-w-md opacity-90 line-clamp-3">
-                      {first.description}
-                    </p>
-                  )}
-                </div>
-                <button className="mt-4 inline-flex items-center justify-center rounded-lg bg-white text-emerald-600 px-4 py-2 text-sm font-semibold shadow-sm group-hover:bg-slate-100 transition">
-                  Shop now
-                </button>
-              </div>
-              {first.image && (
-                <div className="relative hidden sm:block w-40 sm:w-52 md:w-64 overflow-hidden">
+              <div className="absolute inset-0">
+                {first.image ? (
                   <img
                     src={first.image}
                     alt={first.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="h-full w-full object-cover"
                   />
+                ) : (
+                  <div className="h-full w-full bg-linear-to-br from-slate-700 to-slate-800" />
+                )}
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <div className="relative z-10 flex-1 p-6 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                    {first.name}
+                  </h3>
                 </div>
-              )}
+                <button className="inline-flex items-center justify-center rounded-lg bg-amber-500 text-white px-4 py-2 text-sm font-semibold hover:bg-amber-400 transition">
+                  CHECK IT NOW
+                  <HiArrowRight className="w-4 h-4 ml-2" />
+                </button>
+              </div>
             </MotionLink>
           )}
 
           {second && (
             <MotionLink
               to={`/products/${encodeURIComponent(second.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-teal-500 text-white flex items-stretch"
+              className="group relative md:col-span-2 md:row-span-2 rounded-2xl overflow-hidden flex items-stretch"
               variants={cardVariants}
             >
-              <div className="flex-1 p-4 flex flex-col justify-between">
+              <div className="absolute inset-0">
+                {second.image ? (
+                  <img
+                    src={second.image}
+                    alt={second.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-linear-to-br from-amber-600 to-orange-600" />
+                )}
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <div className="relative z-10 flex-1 p-8 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold mb-1 line-clamp-2">
+                  <p className="uppercase text-xs tracking-[0.2em] mb-2 text-amber-400 font-semibold">
+                    Featured
+                  </p>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
                     {second.name}
                   </h3>
                   {second.description && (
-                    <p className="text-xs opacity-90 line-clamp-2">
+                    <p className="text-sm sm:text-base max-w-md text-white/90">
                       {second.description}
                     </p>
                   )}
                 </div>
+                <button className="mt-4 inline-flex items-center justify-center rounded-lg bg-amber-500 text-white px-6 py-3 text-sm font-semibold hover:bg-amber-400 transition">
+                  CHECK IT NOW
+                  <HiArrowRight className="w-4 h-4 ml-2" />
+                </button>
               </div>
-              {second.image && (
-                <div className="relative w-24 overflow-hidden hidden sm:block">
-                  <img
-                    src={second.image}
-                    alt={second.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              )}
             </MotionLink>
           )}
 
           {third && (
             <MotionLink
               to={`/products/${encodeURIComponent(third.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center p-4"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch"
               variants={cardVariants}
             >
-              {third.image && (
-                <div className="mr-4 h-16 w-16 rounded-xl overflow-hidden shrink-0">
+              <div className="absolute inset-0">
+                {third.image ? (
                   <img
                     src={third.image}
                     alt={third.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="h-full w-full object-cover"
                   />
+                ) : (
+                  <div className="h-full w-full bg-linear-to-br from-red-600 to-pink-600" />
+                )}
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <div className="relative z-10 flex-1 p-6 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                    {third.name}
+                  </h3>
                 </div>
-              )}
-              <div className="flex-1">
-                <h3 className="text-base font-semibold line-clamp-2">
-                  {third.name}
-                </h3>
+                <button className="inline-flex items-center justify-center rounded-lg bg-amber-500 text-white px-4 py-2 text-sm font-semibold hover:bg-amber-400 transition">
+                  CHECK IT NOW
+                  <HiArrowRight className="w-4 h-4 ml-2" />
+                </button>
               </div>
             </MotionLink>
           )}
@@ -196,20 +213,31 @@ function CategoriesSwiper() {
           {fourth && (
             <MotionLink
               to={`/products/${encodeURIComponent(fourth.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-amber-400 text-slate-900 flex items-stretch"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch"
               variants={cardVariants}
             >
-              <div className="flex-1 p-4 flex flex-col justify-between">
+              <div className="absolute inset-0">
+                {fourth.image ? (
+                  <img
+                    src={fourth.image}
+                    alt={fourth.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-linear-to-br from-blue-600 to-cyan-600" />
+                )}
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <div className="relative z-10 flex-1 p-6 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-base font-bold mb-1 line-clamp-2">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
                     {fourth.name}
                   </h3>
-                  {fourth.description && (
-                    <p className="text-xs opacity-90 line-clamp-2">
-                      {fourth.description}
-                    </p>
-                  )}
                 </div>
+                <button className="inline-flex items-center justify-center rounded-lg bg-amber-500 text-white px-4 py-2 text-sm font-semibold hover:bg-amber-400 transition">
+                  CHECK IT NOW
+                  <HiArrowRight className="w-4 h-4 ml-2" />
+                </button>
               </div>
             </MotionLink>
           )}
@@ -217,26 +245,32 @@ function CategoriesSwiper() {
           {fifth && (
             <MotionLink
               to={`/products/${encodeURIComponent(fifth.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center justify-between px-4"
+              className="group relative rounded-2xl overflow-hidden flex items-stretch md:col-start-3"
               variants={cardVariants}
             >
-              <div className="py-4">
-                <h3 className="text-base font-semibold line-clamp-1">
-                  {fifth.name}
-                </h3>
-                <p className="text-xs text-slate-300">
-                  Shop now and save more.
-                </p>
-              </div>
-              {fifth.image && (
-                <div className="h-16 w-16 rounded-full overflow-hidden">
+              <div className="absolute inset-0">
+                {fifth.image ? (
                   <img
                     src={fifth.image}
                     alt={fifth.name}
-                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="h-full w-full object-cover"
                   />
+                ) : (
+                  <div className="h-full w-full bg-linear-to-br from-purple-600 to-indigo-600" />
+                )}
+                <div className="absolute inset-0 bg-black/40" />
+              </div>
+              <div className="relative z-10 flex-1 p-6 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                    {fifth.name}
+                  </h3>
                 </div>
-              )}
+                <button className="inline-flex items-center justify-center rounded-lg bg-amber-500 text-white px-4 py-2 text-sm font-semibold hover:bg-amber-400 transition">
+                  CHECK IT NOW
+                  <HiArrowRight className="w-4 h-4 ml-2" />
+                </button>
+              </div>
             </MotionLink>
           )}
         </motion.div>

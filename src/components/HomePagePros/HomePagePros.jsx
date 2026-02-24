@@ -82,8 +82,8 @@ function HomePagePros() {
           className="featured-grid"
           variants={gridVariants}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
+          animate="show"
+          viewport={{ once: true, amount: 0.1 }}
         >
           {pros.slice(0, 8).map((pro) => (
             <motion.div
