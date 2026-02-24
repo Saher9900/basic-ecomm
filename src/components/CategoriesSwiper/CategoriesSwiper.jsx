@@ -1,44 +1,46 @@
-import { useContext, useEffect, useRef, useCallback } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
 import { CatsContext } from "../../contexts/CatsContext";
 import "./CategoriesSwiper.css";
-import "swiper/css";
-import "swiper/css/pagination";
 
 const FALLBACK_CATS = [
-  { id: 0, name: "Electronics", description: "Explore our range", image: null },
+  {
+    id: 0,
+    name: "Fresh Organic",
+    description: "Explore our freshest categories.",
+    image: null,
+  },
 ];
 
 function CategoriesSwiper() {
   const { getCats, cats, catsLoading } = useContext(CatsContext);
-  const swiperRef = useRef(null);
 
   useEffect(() => {
     getCats();
   }, []);
 
-  const goPrev = useCallback(() => swiperRef.current?.slidePrev(), []);
-  const goNext = useCallback(() => swiperRef.current?.slideNext(), []);
-
-  const list = Array.isArray(cats) && cats.length > 0 ? cats : FALLBACK_CATS;
-  const showArrows = list.length > 1;
+  const list =
+    Array.isArray(cats) && cats.length > 0
+      ? cats.slice(-5).reverse()
+      : FALLBACK_CATS;
 
   if (catsLoading) {
     return (
-      <section className="py-16 sm:py-24 bg-slate-900">
+      <section
+        id="categories-section"
+        className="py-16 sm:py-24 bg-slate-900"
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10">
-            <div className="h-6 w-32 rounded bg-slate-700 animate-pulse mx-auto mb-2" />
-            <div className="h-10 w-48 rounded bg-slate-700 animate-pulse mx-auto" />
+            <div className="h-5 w-32 rounded bg-slate-800 animate-pulse mx-auto mb-2" />
+            <div className="h-8 w-56 rounded bg-slate-800 animate-pulse mx-auto mb-3" />
+            <div className="h-4 w-72 rounded bg-slate-800 animate-pulse mx-auto" />
           </div>
-          <div className="flex gap-4 overflow-hidden">
-            {[1, 2, 3].map((i) => (
+          <div className="grid gap-4 md:grid-cols-3 auto-rows-[160px]">
+            {[1, 2, 3, 4, 5].map((i) => (
               <div
                 key={i}
-                className="h-40 flex-1 min-w-[200px] rounded-2xl bg-slate-800 animate-pulse"
+                className="rounded-2xl bg-slate-800/80 animate-pulse"
               />
             ))}
           </div>
@@ -47,84 +49,161 @@ function CategoriesSwiper() {
     );
   }
 
+  const [first, second, third, fourth, fifth] = list;
+
   return (
-    <section className="py-16 sm:py-24 bg-slate-900">
+    <section
+      id="categories-section"
+      className="py-16 sm:py-24 bg-slate-900"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
           <span className="inline-block text-amber-500 text-xs font-bold uppercase tracking-widest mb-2 px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/30">
-            Browse
+            New arrivals
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">Shop by Category</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+            Just added categories
+          </h2>
           <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-            Explore our range of electronics
+            Discover the latest categories our team has added to the store.
           </p>
         </div>
 
-        <div className="relative">
-          <Swiper
-            onSwiper={(swiper) => { swiperRef.current = swiper; }}
-            spaceBetween={16}
-            slidesPerView={1}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            loop={list.length > 1}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
-            pagination={{ clickable: true }}
-            modules={[Autoplay, Pagination]}
-            className="categories-swiper pb-12"
-          >
-            {list.map((cat) => (
-              <SwiperSlide key={cat.id}>
-                <Link
-                  to={`/products/${encodeURIComponent(cat.name)}`}
-                  className="block group rounded-2xl overflow-hidden border border-slate-700 bg-slate-800 hover:border-amber-500/50 transition-all duration-300"
-                >
-                  <div className="aspect-4/3 relative bg-slate-800">
-                    {cat.image ? (
-                      <img
-                        src={cat.image}
-                        alt={cat.name}
-                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-slate-700 text-slate-400 text-4xl">
-                        •
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-linear-to-t from-slate-900/90 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <h3 className="text-xl font-bold text-white">{cat.name}</h3>
-                      {cat.description && (
-                        <p className="text-slate-300 text-sm mt-0.5 line-clamp-2">{cat.description}</p>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+        <div className="grid gap-4 md:grid-cols-3 auto-rows-[180px] md:auto-rows-[190px]">
+          {first && (
+            <Link
+              to={`/products/${encodeURIComponent(first.name)}`}
+              className="group relative md:row-span-2 md:col-span-2 rounded-2xl overflow-hidden bg-emerald-500 text-white flex items-stretch animate-fade-in-up"
+              style={{ animationDelay: "40ms" }}
+            >
+              <div className="flex-1 p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                  <p className="uppercase text-xs tracking-[0.2em] mb-2 opacity-80">
+                    Fresh &amp; organic
+                  </p>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold mb-2 line-clamp-2">
+                    {first.name}
+                  </h3>
+                  {first.description && (
+                    <p className="text-sm sm:text-base max-w-md opacity-90 line-clamp-3">
+                      {first.description}
+                    </p>
+                  )}
+                </div>
+                <button className="mt-4 inline-flex items-center justify-center rounded-lg bg-white text-emerald-600 px-4 py-2 text-sm font-semibold shadow-sm group-hover:bg-slate-100 transition">
+                  Shop now
+                </button>
+              </div>
+              {first.image && (
+                <div className="relative hidden sm:block w-40 sm:w-52 md:w-64 overflow-hidden">
+                  <img
+                    src={first.image}
+                    alt={first.name}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+            </Link>
+          )}
 
-          {showArrows && (
-            <>
-              <button
-                type="button"
-                onClick={goPrev}
-                aria-label="Previous"
-                className="absolute left-0 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-slate-800/90 text-white border border-slate-600 hover:bg-amber-500 hover:text-slate-900 hover:border-amber-500 transition-all"
-              >
-                <HiChevronLeft className="h-6 w-6" />
-              </button>
-              <button
-                type="button"
-                onClick={goNext}
-                aria-label="Next"
-                className="absolute right-0 top-1/2 z-10 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full bg-slate-800/90 text-white border border-slate-600 hover:bg-amber-500 hover:text-slate-900 hover:border-amber-500 transition-all"
-              >
-                <HiChevronRight className="h-6 w-6" />
-              </button>
-            </>
+          {second && (
+            <Link
+              to={`/products/${encodeURIComponent(second.name)}`}
+              className="group relative rounded-2xl overflow-hidden bg-teal-500 text-white flex items-stretch animate-fade-in-up"
+              style={{ animationDelay: "80ms" }}
+            >
+              <div className="flex-1 p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-bold mb-1 line-clamp-2">
+                    {second.name}
+                  </h3>
+                  {second.description && (
+                    <p className="text-xs opacity-90 line-clamp-2">
+                      {second.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+              {second.image && (
+                <div className="relative w-24 overflow-hidden hidden sm:block">
+                  <img
+                    src={second.image}
+                    alt={second.name}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+            </Link>
+          )}
+
+          {third && (
+            <Link
+              to={`/products/${encodeURIComponent(third.name)}`}
+              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center p-4 animate-fade-in-up"
+              style={{ animationDelay: "120ms" }}
+            >
+              {third.image && (
+                <div className="mr-4 h-16 w-16 rounded-xl overflow-hidden shrink-0">
+                  <img
+                    src={third.image}
+                    alt={third.name}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+              <div className="flex-1">
+                <h3 className="text-base font-semibold line-clamp-2">
+                  {third.name}
+                </h3>
+              </div>
+            </Link>
+          )}
+
+          {fourth && (
+            <Link
+              to={`/products/${encodeURIComponent(fourth.name)}`}
+              className="group relative rounded-2xl overflow-hidden bg-amber-400 text-slate-900 flex items-stretch animate-fade-in-up"
+              style={{ animationDelay: "160ms" }}
+            >
+              <div className="flex-1 p-4 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-base font-bold mb-1 line-clamp-2">
+                    {fourth.name}
+                  </h3>
+                  {fourth.description && (
+                    <p className="text-xs opacity-90 line-clamp-2">
+                      {fourth.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {fifth && (
+            <Link
+              to={`/products/${encodeURIComponent(fifth.name)}`}
+              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center justify-between px-4 animate-fade-in-up"
+              style={{ animationDelay: "200ms" }}
+            >
+              <div className="py-4">
+                <h3 className="text-base font-semibold line-clamp-1">
+                  {fifth.name}
+                </h3>
+                <p className="text-xs text-slate-300">
+                  Shop now and save more.
+                </p>
+              </div>
+              {fifth.image && (
+                <div className="h-16 w-16 rounded-full overflow-hidden">
+                  <img
+                    src={fifth.image}
+                    alt={fifth.name}
+                    className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+            </Link>
           )}
         </div>
       </div>

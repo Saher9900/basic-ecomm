@@ -1,6 +1,6 @@
 import "./HeadSwiper.css";
 import { useContext, useEffect, useRef, useCallback } from "react";
-import { CatsContext } from "../../contexts/CatsContext";
+import AchContext from "../../contexts/AchContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
@@ -9,18 +9,18 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 function HeadSwiper() {
-  const { getCats, cats, catsLoading } = useContext(CatsContext);
+  const { getAch, ach, achLoading } = useContext(AchContext);
   const navigate = useNavigate();
   const swiperInstanceRef = useRef(null);
 
   useEffect(() => {
-    getCats();
+    getAch();
   }, []);
 
   const goPrev = useCallback(() => swiperInstanceRef.current?.slidePrev(), []);
   const goNext = useCallback(() => swiperInstanceRef.current?.slideNext(), []);
 
-  if (catsLoading) {
+  if (achLoading) {
     return (
       <section className="hero">
         <div className="hero-swiper-wrap">
@@ -37,8 +37,8 @@ function HeadSwiper() {
     );
   }
 
-  const slides = Array.isArray(cats) && cats.length > 0
-    ? cats
+  const slides = Array.isArray(ach) && ach.length > 1
+    ? ach.slice(1)
     : [{ id: 0, name: "Electronics", description: "Discover our collection.", image: null }];
   const showArrows = slides.length > 1;
 
@@ -55,13 +55,13 @@ function HeadSwiper() {
           modules={[Autoplay, Pagination]}
           className="hero-swiper"
         >
-          {slides.map((cat) => (
-            <SwiperSlide key={cat.id}>
+          {slides.map((ach) => (
+            <SwiperSlide key={ach.id}>
               <div className="hero-slide">
                 <div className="hero-bg">
-                  {cat.image && (
+                  {ach.image && (
                     <img
-                      src={cat.image}
+                      src={ach.image}
                       alt=""
                       className="hero-bg-img"
                       loading="eager"
@@ -70,16 +70,16 @@ function HeadSwiper() {
                   <div className="hero-overlay" />
                 </div>
                 <div className="hero-content">
-                  <p className="hero-label">{cat.name}</p>
-                  <h1 className="hero-title">{cat.name}</h1>
-                  <p className="hero-desc">{cat.description || "Explore our collection."}</p>
-                  <div
-                    onClick={() => navigate(cat.id ? `/products/${cat.name}` : "/products")}
+                  <p className="hero-label">{ach.name}{ach.id}</p>
+                  <h1 className="hero-title">{ach.name}</h1>
+                  <p className="hero-desc">{ach.description || "Explore our collection."}</p>
+                  <a
+                    href="#categories-section"
                     className="hero-cta"
                     role="button"
                   >
-                    Shop {cat.name}
-                  </div>
+                    Check Our Categories
+                  </a>
                 </div>
               </div>
             </SwiperSlide>

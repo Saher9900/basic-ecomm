@@ -7,7 +7,7 @@ const AchContext = createContext();
 export default AchContext;
 
 export const AchContextProvider = ({ children }) => {
-  const [ach, setAch] = useState({});
+  const [ach, setAch] = useState([]);
   const [achLoading, setAchLoading] = useState(false);
   const achURL = "/api/achievement";
 
@@ -25,16 +25,26 @@ export const AchContextProvider = ({ children }) => {
               }
             })()
           : data;
-      const raw = Array.isArray(parsed) ? parsed[0] : parsed;
-      const rawImage = raw?.image ?? raw?.Image;
-      const imageUrl =
-        rawImage != null && typeof rawImage === "string"
-          ? proxyImageUrl(rawImage) ?? rawImage
-          : rawImage;
-      const normalized =
-        raw && typeof raw === "object"
-          ? { ...raw, image: imageUrl }
-          : raw ?? {};
+
+      const items = Array.isArray(parsed)
+        ? parsed
+        : parsed
+        ? [parsed]
+        : [];
+
+      const normalized = items.map((item) => {
+        const rawImage = item?.image ?? item?.Image;
+        const imageUrl =
+          rawImage != null && typeof rawImage === "string"
+            ? proxyImageUrl(rawImage) ?? rawImage
+            : rawImage;
+
+        return {
+          ...item,
+          image: imageUrl,
+        };
+      });
+
       setAch(normalized);
     } catch (err) {
       console.log(err);

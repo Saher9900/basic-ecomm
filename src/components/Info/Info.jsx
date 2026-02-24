@@ -35,10 +35,10 @@ function Info() {
           ) : (
             <>
               <div className="info-media">
-                {ach?.image ? (
+                {ach[0]?.image ? (
                   <img
-                    src={ach.image}
-                    alt={ach?.title ?? "Modern Electronics Store"}
+                    src={ach[0].image}
+                    alt={ach[0]?.title ?? "Modern Electronics Store"}
                     className="info-img"
                   />
                 ) : (
@@ -48,8 +48,8 @@ function Info() {
               </div>
               <div className="info-body">
                 <span className="info-eyebrow">Why choose us</span>
-                <h2 className="info-title">{ach?.title}</h2>
-                <p className="info-text">{ach?.description}</p>
+                <h2 className="info-title">{ach[0]?.title}</h2>
+                <p className="info-text">{ach[0]?.description}</p>
               </div>
             </>
           )}

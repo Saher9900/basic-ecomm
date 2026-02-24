@@ -52,11 +52,12 @@ function HomePagePros() {
           </p>
         </header>
         <div className="featured-grid">
-          {pros.slice(0, 8).map((pro) => (
+          {pros.slice(0, 8).map((pro, index) => (
             <div
               onClick={() => navigate(`/products/proDetails/${pro.id}`)}
               key={pro.id}
-              className="featured-card"
+              className="featured-card animate-fade-in-up"
+              style={{ animationDelay: `${index * 70}ms` }}
             >
               <div className="featured-card-image-wrap">
                 <img

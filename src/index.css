@@ -8,6 +8,10 @@ body{
   font-family: "SN Pro", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Pointer cursor for all clickable elements */
 a,
 button,
@@ -16,4 +20,24 @@ input[type="submit"],
 input[type="button"],
 [type="button"] {
   cursor: pointer;
+}
+
+/* Global fade-in-up animation for cards/items */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation-name: fade-in-up;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
 }

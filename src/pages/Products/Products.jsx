@@ -115,7 +115,7 @@ function Products() {
         {/* Category tabs */}
         <div className="mb-6 sm:mb-8">
           <div className="flex flex-row gap-2.5 sm:gap-3 py-2 overflow-x-auto no-scrollbar">
-            {cats.map((cat) => {
+            {cats.map((cat, index) => {
               const isActive = chosenCat === cat.name;
               return (
                 <Link
@@ -125,7 +125,8 @@ function Products() {
                     isActive
                       ? "bg-amber-500 text-slate-900 border-amber-400 shadow-lg shadow-amber-500/30"
                       : "bg-slate-900/60 text-slate-200 border-slate-700 hover:bg-slate-800 hover:border-slate-500"
-                  }`}
+                  } animate-fade-in-up`}
+                  style={{ animationDelay: `${index * 40}ms` }}
                 >
                   {cat.name}
                 </Link>
@@ -141,10 +142,11 @@ function Products() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-            {filteredPros.map((pro) => (
+            {filteredPros.map((pro, index) => (
               <article
                 key={pro.id}
-                className="group rounded-2xl border border-slate-800 bg-slate-900/70 hover:bg-slate-900 hover:border-amber-500/60 transition-all duration-200 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col"
+                className="group rounded-2xl border border-slate-800 bg-slate-900/70 hover:bg-slate-900 hover:border-amber-500/60 transition-all duration-200 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col animate-fade-in-up"
+                style={{ animationDelay: `${index * 60}ms` }}
               >
                 <button
                   type="button"
