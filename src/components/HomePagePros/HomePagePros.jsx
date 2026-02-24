@@ -2,7 +2,6 @@ import "./HomePagePros.css";
 import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FeatContext } from "../../contexts/FeatContext";
-import { motion } from "motion/react";
 
 function HomePagePros() {
   // Use featured products from FeatContext
@@ -12,6 +11,35 @@ function HomePagePros() {
   useEffect(() => {
     getPros();
   }, []);
+
+  if (prosLoading) {
+    return (
+      <section className="featured">
+        <div className="featured-container">
+          <header className="featured-header">
+            <div className="h-4 w-32 rounded bg-gray-200 animate-pulse mb-2" />
+            <div className="h-8 w-56 rounded bg-gray-200 animate-pulse mb-2" />
+            <div className="h-4 w-72 rounded bg-gray-200 animate-pulse" />
+          </header>
+          <div className="featured-grid">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <div key={i} className="featured-card opacity-90">
+                <div className="featured-card-image-wrap bg-gray-200 animate-pulse min-h-[200px]" />
+                <div className="featured-card-body space-y-2 pt-3">
+                  <div className="h-5 w-3/4 rounded bg-gray-200 animate-pulse" />
+                  <div className="h-4 w-16 rounded bg-gray-200 animate-pulse" />
+                  <div className="h-4 w-20 rounded bg-gray-200 animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="featured-footer">
+            <div className="h-11 w-40 rounded-lg bg-gray-200 animate-pulse" />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const gridVariants = {
     hidden: { opacity: 0, y: 10 },
@@ -49,22 +77,15 @@ function HomePagePros() {
             Hand-picked tech and electronics for every need.
           </p>
         </header>
-        <motion.div
-          className="featured-grid"
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-        >
+        <div className="featured-grid">
           {pros.slice(0, 8).map((pro) => (
-            <motion.div
+            <div
               onClick={() => {
                 sessionStorage.setItem('fromHome', 'true');
                 navigate(`/products/proDetails/${pro.id}`, { state: { from: 'home' } });
               }}
               key={pro.id}
               className="featured-card"
-              variants={cardVariants}
             >
               <div className="featured-card-image-wrap">
                 <img
@@ -77,9 +98,9 @@ function HomePagePros() {
                 <h3 className="featured-card-title">{pro?.name}</h3>
                 <span className="featured-card-cta">View details</span>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
         <div className="featured-footer">
           <Link to="/products/" className="featured-btn">
             View all products
