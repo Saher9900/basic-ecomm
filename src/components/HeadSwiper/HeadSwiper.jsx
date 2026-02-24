@@ -69,6 +69,7 @@ function HeadSwiper() {
     ? ach.slice(1)
     : [{ id: 0, name: "Electronics", description: "Discover our collection.", image: null }];
   const showArrows = slides.length > 1;
+  const isMobile = window.innerWidth < 768; // md breakpoint is 768px
 
   return (
     <section className="hero">
@@ -144,7 +145,7 @@ function HeadSwiper() {
             );
           })}
         </Swiper>
-        {showArrows && (
+        {showArrows && !isMobile && (
           <>
             <button
               type="button"
