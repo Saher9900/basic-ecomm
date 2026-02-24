@@ -15,10 +15,26 @@ export const AchContextProvider = ({ children }) => {
     setAchLoading(true);
     try {
       const { data } = await axios.get(achURL);
-      const normalized =
-        data && typeof data === "object"
-          ? { ...data, image: proxyImageUrl(data?.image) }
+      const parsed =
+        typeof data === "string"
+          ? (() => {
+              try {
+                return JSON.parse(data);
+              } catch {
+                return data;
+              }
+            })()
           : data;
+      const raw = Array.isArray(parsed) ? parsed[0] : parsed;
+      const rawImage = raw?.image ?? raw?.Image;
+      const imageUrl =
+        rawImage != null && typeof rawImage === "string"
+          ? proxyImageUrl(rawImage) ?? rawImage
+          : rawImage;
+      const normalized =
+        raw && typeof raw === "object"
+          ? { ...raw, image: imageUrl }
+          : raw ?? {};
       setAch(normalized);
     } catch (err) {
       console.log(err);

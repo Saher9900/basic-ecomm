@@ -35,17 +35,21 @@ function Info() {
           ) : (
             <>
               <div className="info-media">
-                <img
-                  src={ach.image}
-                  alt="Modern Electronics Store"
-                  className="info-img"
-                />
+                {ach?.image ? (
+                  <img
+                    src={ach.image}
+                    alt={ach?.title ?? "Modern Electronics Store"}
+                    className="info-img"
+                  />
+                ) : (
+                  <div className="info-img bg-gray-200 rounded-xl" aria-hidden />
+                )}
                 <div className="info-media-badge">Since 2010</div>
               </div>
               <div className="info-body">
                 <span className="info-eyebrow">Why choose us</span>
-                <h2 className="info-title">{ach.title}</h2>
-                <p className="info-text">{ach.description}</p>
+                <h2 className="info-title">{ach?.title}</h2>
+                <p className="info-text">{ach?.description}</p>
               </div>
             </>
           )}

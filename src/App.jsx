@@ -8,8 +8,7 @@ import NotFound from './pages/NotFound/NotFound.jsx'
 import ErrorPage from './pages/ErrorPage/ErrorPage.jsx'
 import ProDetails from './pages/ProDetails/ProDetails.jsx'
 import Contact from './pages/Contact/Contact.jsx'
-import TestSearch from './pages/TestSearch.jsx'
-
+import TestImage from './pages/TestImage.jsx'
 
 function App() {
   const router = createBrowserRouter(
@@ -26,7 +25,7 @@ function App() {
           { path: "products/proDetails/:id", element: <ProDetails /> },
           { path: "products/:category", element: <Products /> },
           { path: "*", element: <NotFound /> },
-          {path: "search", element: <TestSearch />}
+          { path: "test", element: <TestImage /> },
         ],
       },
     ],
