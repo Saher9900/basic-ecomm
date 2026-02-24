@@ -1,10 +1,11 @@
 import "./HeadSwiper.css";
-import { useContext, useEffect, useRef, useCallback } from "react";
+import { useContext, useEffect, useRef, useCallback, useState } from "react";
 import AchContext from "../../contexts/AchContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
+import { motion } from "motion/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -12,6 +13,7 @@ function HeadSwiper() {
   const { getAch, ach, achLoading } = useContext(AchContext);
   const navigate = useNavigate();
   const swiperInstanceRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     getAch();
@@ -19,6 +21,32 @@ function HeadSwiper() {
 
   const goPrev = useCallback(() => swiperInstanceRef.current?.slidePrev(), []);
   const goNext = useCallback(() => swiperInstanceRef.current?.slideNext(), []);
+
+  const contentVariants = {
+    hidden: { opacity: 0, y: 24 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 18 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
 
   if (achLoading) {
     return (
@@ -47,6 +75,13 @@ function HeadSwiper() {
       <div className="hero-swiper-wrap relative">
         <Swiper
           onSwiper={(swiper) => { swiperInstanceRef.current = swiper; }}
+          onSlideChange={(swiper) => {
+            const realIndex =
+              typeof swiper.realIndex === "number"
+                ? swiper.realIndex
+                : swiper.activeIndex || 0;
+            setActiveIndex(realIndex);
+          }}
           spaceBetween={0}
           slidesPerView={1}
           loop={slides.length > 1}
@@ -55,8 +90,10 @@ function HeadSwiper() {
           modules={[Autoplay, Pagination]}
           className="hero-swiper"
         >
-          {slides.map((ach) => (
-            <SwiperSlide key={ach.id}>
+          {slides.map((ach, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <SwiperSlide key={ach.id}>
               <div className="hero-slide">
                 <div className="hero-bg">
                   {ach.image && (
@@ -69,21 +106,43 @@ function HeadSwiper() {
                   )}
                   <div className="hero-overlay" />
                 </div>
-                <div className="hero-content">
-                  <p className="hero-label">{ach.name}{ach.id}</p>
-                  <h1 className="hero-title">{ach.name}</h1>
-                  <p className="hero-desc">{ach.description || "Explore our collection."}</p>
-                  <a
+                <motion.div
+                  className="hero-content"
+                  variants={contentVariants}
+                  initial="hidden"
+                  animate={isActive ? "show" : "hidden"}
+                >
+                  <motion.p className="hero-label" variants={itemVariants}>
+                    {ach.name}
+                  </motion.p>
+                  <motion.h1 className="hero-title" variants={itemVariants}>
+                    {ach.name}
+                  </motion.h1>
+                  <motion.p
+                    className="hero-desc"
+                    variants={itemVariants}
+                  >
+                    {ach.description || "Explore our collection."}
+                  </motion.p>
+                  <motion.a
                     href="#categories-section"
                     className="hero-cta"
                     role="button"
+                    variants={itemVariants}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document
+                        .getElementById("categories-section")
+                        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
                   >
                     Check Our Categories
-                  </a>
-                </div>
+                  </motion.a>
+                </motion.div>
               </div>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
         {showArrows && (
           <>

@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CatsContext } from "../../contexts/CatsContext";
 import "./CategoriesSwiper.css";
+import { motion } from "motion/react"
 
 const FALLBACK_CATS = [
   {
@@ -51,11 +52,38 @@ function CategoriesSwiper() {
 
   const [first, second, third, fourth, fifth] = list;
 
+  const MotionLink = motion(Link);
+
+  const gridVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.16, 1, 0.3, 1],
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.96, filter: "blur(4px)" },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
-    <section
-      id="categories-section"
-      className="py-16 sm:py-24 bg-slate-900"
-    >
+    <section id="categories-section" className="py-16 sm:py-24 bg-slate-900">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
           <span className="inline-block text-amber-500 text-xs font-bold uppercase tracking-widest mb-2 px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/30">
@@ -69,12 +97,18 @@ function CategoriesSwiper() {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3 auto-rows-[180px] md:auto-rows-[190px]">
+        <motion.div
+          className="grid gap-4 md:grid-cols-3 auto-rows-[180px] md:auto-rows-[190px]"
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {first && (
-            <Link
+            <MotionLink
               to={`/products/${encodeURIComponent(first.name)}`}
-              className="group relative md:row-span-2 md:col-span-2 rounded-2xl overflow-hidden bg-emerald-500 text-white flex items-stretch animate-fade-in-up"
-              style={{ animationDelay: "40ms" }}
+              className="group relative md:row-span-2 md:col-span-2 rounded-2xl overflow-hidden bg-emerald-500 text-white flex items-stretch"
+              variants={cardVariants}
             >
               <div className="flex-1 p-6 sm:p-8 flex flex-col justify-between">
                 <div>
@@ -103,14 +137,14 @@ function CategoriesSwiper() {
                   />
                 </div>
               )}
-            </Link>
+            </MotionLink>
           )}
 
           {second && (
-            <Link
+            <MotionLink
               to={`/products/${encodeURIComponent(second.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-teal-500 text-white flex items-stretch animate-fade-in-up"
-              style={{ animationDelay: "80ms" }}
+              className="group relative rounded-2xl overflow-hidden bg-teal-500 text-white flex items-stretch"
+              variants={cardVariants}
             >
               <div className="flex-1 p-4 flex flex-col justify-between">
                 <div>
@@ -133,14 +167,14 @@ function CategoriesSwiper() {
                   />
                 </div>
               )}
-            </Link>
+            </MotionLink>
           )}
 
           {third && (
-            <Link
+            <MotionLink
               to={`/products/${encodeURIComponent(third.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center p-4 animate-fade-in-up"
-              style={{ animationDelay: "120ms" }}
+              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center p-4"
+              variants={cardVariants}
             >
               {third.image && (
                 <div className="mr-4 h-16 w-16 rounded-xl overflow-hidden shrink-0">
@@ -156,14 +190,14 @@ function CategoriesSwiper() {
                   {third.name}
                 </h3>
               </div>
-            </Link>
+            </MotionLink>
           )}
 
           {fourth && (
-            <Link
+            <MotionLink
               to={`/products/${encodeURIComponent(fourth.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-amber-400 text-slate-900 flex items-stretch animate-fade-in-up"
-              style={{ animationDelay: "160ms" }}
+              className="group relative rounded-2xl overflow-hidden bg-amber-400 text-slate-900 flex items-stretch"
+              variants={cardVariants}
             >
               <div className="flex-1 p-4 flex flex-col justify-between">
                 <div>
@@ -177,14 +211,14 @@ function CategoriesSwiper() {
                   )}
                 </div>
               </div>
-            </Link>
+            </MotionLink>
           )}
 
           {fifth && (
-            <Link
+            <MotionLink
               to={`/products/${encodeURIComponent(fifth.name)}`}
-              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center justify-between px-4 animate-fade-in-up"
-              style={{ animationDelay: "200ms" }}
+              className="group relative rounded-2xl overflow-hidden bg-slate-800 text-white flex items-center justify-between px-4"
+              variants={cardVariants}
             >
               <div className="py-4">
                 <h3 className="text-base font-semibold line-clamp-1">
@@ -203,9 +237,9 @@ function CategoriesSwiper() {
                   />
                 </div>
               )}
-            </Link>
+            </MotionLink>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

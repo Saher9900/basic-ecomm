@@ -4,6 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { HiOutlineShoppingBag, HiOutlineChatBubbleLeftRight } from "react-icons/hi2";
 import { CatsContext } from "../../contexts/CatsContext.jsx";
 import { ProsContext } from "../../contexts/ProsContext.jsx";
+import { motion } from "motion/react";
 
 function Products() {
   const { category: categoryParam } = useParams();
@@ -35,6 +36,58 @@ function Products() {
     getCats();
     getPros();
   }, []);
+
+  const categoryRowVariants = {
+    hidden: { opacity: 0, y: 6 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.35,
+        ease: [0.22, 0.61, 0.36, 1],
+        staggerChildren: 0.06,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const categoryChipVariants = {
+    hidden: { opacity: 0, y: 8 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.22, 0.61, 0.36, 1],
+      },
+    },
+  };
+
+  const productsGridVariants = {
+    hidden: { opacity: 0, y: 10 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.45,
+        ease: [0.22, 0.61, 0.36, 1],
+        staggerChildren: 0.09,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const productCardVariants = {
+    hidden: { opacity: 0, y: 12 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.22, 0.61, 0.36, 1],
+      },
+    },
+  };
 
   if (loading) {
     return (
@@ -114,25 +167,30 @@ function Products() {
 
         {/* Category tabs */}
         <div className="mb-6 sm:mb-8">
-          <div className="flex flex-row gap-2.5 sm:gap-3 py-2 overflow-x-auto no-scrollbar">
+          <motion.div
+            className="flex flex-row gap-2.5 sm:gap-3 py-2 overflow-x-auto no-scrollbar"
+            variants={categoryRowVariants}
+            initial="hidden"
+            animate="show"
+          >
             {cats.map((cat, index) => {
               const isActive = chosenCat === cat.name;
               return (
-                <Link
-                  key={cat.id}
-                  to={`/products/${encodeURIComponent(cat.name)}`}
-                  className={`whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium no-underline transition-all duration-150 ${
-                    isActive
-                      ? "bg-amber-500 text-slate-900 border-amber-400 shadow-lg shadow-amber-500/30"
-                      : "bg-slate-900/60 text-slate-200 border-slate-700 hover:bg-slate-800 hover:border-slate-500"
-                  } animate-fade-in-up`}
-                  style={{ animationDelay: `${index * 40}ms` }}
-                >
-                  {cat.name}
-                </Link>
+                <motion.div key={cat.id} variants={categoryChipVariants}>
+                  <Link
+                    to={`/products/${encodeURIComponent(cat.name)}`}
+                    className={`whitespace-nowrap px-4 py-2 rounded-full border text-sm font-medium no-underline transition-all duration-150 ${
+                      isActive
+                        ? "bg-amber-500 text-slate-900 border-amber-400 shadow-lg shadow-amber-500/30"
+                        : "bg-slate-900/60 text-slate-200 border-slate-700 hover:bg-slate-800 hover:border-slate-500"
+                    }`}
+                  >
+                    {cat.name}
+                  </Link>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         {/* Products grid */}
@@ -141,12 +199,19 @@ function Products() {
             No products found for this category yet.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-            {filteredPros.map((pro, index) => (
-              <article
+          <motion.div
+            key={chosenCat}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6"
+            variants={productsGridVariants}
+            initial="hidden"
+            animate="show"
+          >
+            {filteredPros.map((pro) => (
+              <motion.article
                 key={pro.id}
-                className="group rounded-2xl border border-slate-800 bg-slate-900/70 hover:bg-slate-900 hover:border-amber-500/60 transition-all duration-200 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col animate-fade-in-up"
-                style={{ animationDelay: `${index * 60}ms` }}
+                className="group rounded-2xl border border-slate-800 bg-slate-900/70 hover:bg-slate-900 hover:border-amber-500/60 transition-all duration-200 shadow-sm hover:shadow-xl hover:shadow-amber-500/10 flex flex-col"
+                variants={productCardVariants}
+                layout
               >
                 <button
                   type="button"
@@ -191,9 +256,9 @@ function Products() {
                     Order on WhatsApp
                   </a>
                 </div>
-              </article>
+              </motion.article>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </section>
