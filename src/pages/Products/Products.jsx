@@ -269,15 +269,6 @@ function Products() {
                     <HiOutlineShoppingBag className="w-4 h-4" />
                     View details
                   </button>
-                  <a
-                    href={`https://wa.me/201282236170?text=Hello, I want to ask about ${pro.name}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 w-full h-10 rounded-lg border border-emerald-500/70 text-emerald-400 text-sm font-semibold hover:bg-emerald-500/10 transition-colors"
-                  >
-                    <HiOutlineChatBubbleLeftRight className="w-4 h-4" />
-                    Order on WhatsApp
-                  </a>
                 </div>
               </motion.article>
             ))}

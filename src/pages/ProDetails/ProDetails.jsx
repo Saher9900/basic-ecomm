@@ -104,7 +104,7 @@ function ProDetails() {
               rel="noopener noreferrer"
               className="prodetails__cta"
             >
-              want to order?
+              Order on WhatsApp
             </a>
           </div>
         </article>
