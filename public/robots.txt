@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+Allow: /api/
+Allow: /products
+Allow: /products/
+Allow: /categories
+Allow: /categories/
+Allow: /about
+Allow: /about/
+Allow: /contact
+Allow: /contact/
+
+# Block common non-content paths
+Disallow: /api/FeaturedProducts/
+Disallow: /api/products/
+Disallow: /api/categories/
+Disallow: /api/achievement/
+Disallow: /api/image/
+
+# Sitemap
+Sitemap: https://basic-ecomm-saher9900s-projects.vercel.app/sitemap.xml
+
+# Crawl delay (optional, be respectful)
+Crawl-delay: 1
